@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteMapper {
 
-    fun toDomainModel(response: ResultOf<List<UserDto>>): ResultOf<List<User>> {
+    fun toUsers(response: ResultOf<List<UserDto>>): ResultOf<List<User>> {
         return when (response) {
             is ResultOf.ApiError -> ResultOf.ApiError(response.message)
             is ResultOf.NetworkError -> ResultOf.NetworkError(response.throwable)
@@ -29,7 +29,7 @@ class RemoteMapper {
         }
     }
 
-    fun toUserModel(response: ResultOf<UserDto>): ResultOf<User> {
+    fun toUser(response: ResultOf<UserDto>): ResultOf<User> {
         return when (response) {
             is ResultOf.ApiError -> ResultOf.ApiError(response.message)
             is ResultOf.NetworkError -> ResultOf.NetworkError(response.throwable)
@@ -42,5 +42,13 @@ class RemoteMapper {
                 ResultOf.Success(user)
             }
         }
+    }
+
+    fun fromUser(user: User): UserDto {
+        return UserDto(
+            name = user.name,
+            email = user.email,
+            id = user.id.toString()
+        )
     }
 }
