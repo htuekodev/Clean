@@ -1,4 +1,4 @@
-package com.htueko.clean.ui.theme
+package com.htueko.clean.core.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
