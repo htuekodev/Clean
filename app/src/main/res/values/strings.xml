@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Clean</string>
+    <string name="error_invalid_email">This email is invalid!</string>
+    <string name="error_blank_email">This email is blank!</string>
 </resources>
