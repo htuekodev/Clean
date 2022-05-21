@@ -8,6 +8,7 @@ import com.htueko.clean.feature.login.ui.viewmodel.LoginViewModel
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
+    onLoginClicked: (String) -> Unit,
 ) {
     val viewState = viewModel.viewState.collectAsState()
 
