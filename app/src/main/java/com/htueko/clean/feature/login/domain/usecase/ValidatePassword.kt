@@ -1,13 +1,13 @@
-package com.htueko.clean.feature.domain.usecase
+package com.htueko.clean.feature.login.domain.usecase
 
 import com.htueko.clean.core.presentation.util.UiText
 
-class ValidatePassword {
+object ValidatePassword {
 
     fun execute(password: String): ValidationResult {
         if (password.length < 8) {
             return ValidationResult(
-                successful = false,
+                isSuccess = false,
                 errorMessage = UiText.StringText("The password needs to consist of at least 8 characters")
             )
         }
@@ -15,12 +15,12 @@ class ValidatePassword {
                 password.any { it.isLetter() }
         if (!containsLettersAndDigits) {
             return ValidationResult(
-                successful = false,
+                isSuccess = false,
                 errorMessage = UiText.StringText("The password needs to contain at least one letter and digit")
             )
         }
         return ValidationResult(
-            successful = true
+            isSuccess = true
         )
     }
 }
