@@ -10,4 +10,5 @@ data class LoginViewState(
     val nameErrorMessage: UiText? = null,
     val emailErrorMessage: UiText? = null,
     val passwordErrorMessage: UiText? = null,
+    val loginErrorMessage: UiText? = null,
 )

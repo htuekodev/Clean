@@ -131,6 +131,11 @@ private fun LoginContentColumn(
 
         VerticalSpacer(height = 12.dp)
 
+        viewState.loginErrorMessage?.let {
+            LoginInErrorText(errorMessage = it.getString())
+            VerticalSpacer(height = 12.dp)
+        }
+
         // Sign up button
         SignUpButton(
             onClick = onLoginClicked,

@@ -3,8 +3,10 @@ package com.htueko.clean.feature.login.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.htueko.clean.core.domain.model.User
+import com.htueko.clean.core.domain.model.status.ResultOf
 import com.htueko.clean.core.domain.usecase.RegisterUserUseCase
 import com.htueko.clean.core.presentation.event.CommonUiEvent
+import com.htueko.clean.core.presentation.util.UiText
 import com.htueko.clean.feature.login.domain.usecase.ValidateEmail
 import com.htueko.clean.feature.login.domain.usecase.ValidateName
 import com.htueko.clean.feature.login.domain.usecase.ValidatePassword
@@ -66,15 +68,36 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             _viewState.update { it.copy(isLoading = true) }
-            loginUseCase(
+            val response = loginUseCase(
                 User(
                     name = _viewState.value.name,
                     email = _viewState.value.email,
                 )
             )
+            when (response) {
+                is ResultOf.ApiError -> {
+                    _viewState.update {
+                        it.copy(
+                            isLoading = false,
+                            loginErrorMessage = UiText.StringText(response.message)
+                        )
+                    }
+                }
+                is ResultOf.NetworkError -> {
+                    _viewState.update {
+                        it.copy(
+                            isLoading = false,
+                            loginErrorMessage = UiText.StringText(response.throwable.message.toString())
+                        )
+                    }
+                }
+                is ResultOf.Success -> {
+                    // to navigate to detail screen with user name
+                    sendUiEvent(CommonUiEvent.NavigateWithString(response.data.name))
+                }
+            }
         }
-        // to navigate to detail screen with user name
-        sendUiEvent(CommonUiEvent.NavigateWithString(_viewState.value.name))
+
     }
 
     private fun sendUiEvent(event: CommonUiEvent) {
