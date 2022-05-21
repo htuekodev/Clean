@@ -1,4 +1,4 @@
-package com.htueko.clean.feature.domain.usecase
+package com.htueko.clean.feature.login.domain.usecase
 
 import com.htueko.clean.core.domain.model.User
 import com.htueko.clean.core.domain.model.status.ResultOf
@@ -13,4 +13,5 @@ class ProdRegisterUserUseCase @Inject constructor(
     override suspend fun invoke(user: User): ResultOf<User> {
         return authRepository.registerUser(user)
     }
+
 }

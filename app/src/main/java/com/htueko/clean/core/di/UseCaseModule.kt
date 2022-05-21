@@ -1,7 +1,7 @@
 package com.htueko.clean.core.di
 
 import com.htueko.clean.core.domain.usecase.RegisterUserUseCase
-import com.htueko.clean.feature.domain.usecase.ProdRegisterUserUseCase
+import com.htueko.clean.feature.login.domain.usecase.ProdRegisterUserUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
