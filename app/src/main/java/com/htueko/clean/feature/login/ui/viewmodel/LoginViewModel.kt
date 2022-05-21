@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.htueko.clean.core.domain.model.User
 import com.htueko.clean.core.domain.usecase.RegisterUserUseCase
-import com.htueko.clean.core.presentation.util.getString
+import com.htueko.clean.core.presentation.event.CommonUiEvent
 import com.htueko.clean.feature.login.domain.usecase.ValidateEmail
 import com.htueko.clean.feature.login.domain.usecase.ValidateName
 import com.htueko.clean.feature.login.domain.usecase.ValidatePassword
@@ -12,9 +12,11 @@ import com.htueko.clean.feature.login.domain.usecase.ValidationResult
 import com.htueko.clean.feature.login.ui.state.LoginViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,6 +24,10 @@ import kotlinx.coroutines.launch
 class LoginViewModel @Inject constructor(
     private val loginUseCase: RegisterUserUseCase,
 ) : ViewModel() {
+
+    // to perform common ui operation.
+    private val _uiEvent = Channel<CommonUiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     private val _viewState: MutableStateFlow<LoginViewState> =
         MutableStateFlow(LoginViewState())
@@ -66,6 +72,14 @@ class LoginViewModel @Inject constructor(
                     email = _viewState.value.email,
                 )
             )
+        }
+        // to navigate to detail screen with user name
+        sendUiEvent(CommonUiEvent.NavigateWithString(_viewState.value.name))
+    }
+
+    private fun sendUiEvent(event: CommonUiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
         }
     }
 

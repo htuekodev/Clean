@@ -16,7 +16,7 @@ fun CleanNavHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.DetailRoute.path.route
+        startDestination = Screen.LoginRoute.path.route
     ) {
         // login screen
         composable(
@@ -33,8 +33,10 @@ fun CleanNavHost(
         // detail screen
         composable(
             route = Screen.DetailRoute.path.route + "/{name}",
-        ) {
-            DetailScreen()
+        ) { navBackStack ->
+            val name = navBackStack.arguments?.getString("name")
+                DetailScreen(name)
         }
+
     }
 }
