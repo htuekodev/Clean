@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -45,14 +46,16 @@ fun CleanOutlineButton(
     OutlinedButton(
         onClick = onClick,
         border = BorderStroke(borderWidth, borderColour),
-        modifier = modifier,
+        modifier = modifier.testTag(TestTag.ButtonTag.cleanOutlineButtonTag),
     ) {
         Icon(
             imageVector = imageVector,
             contentDescription = contentDescription,
-            modifier = Modifier.padding(end = iconPadding)
+            modifier = Modifier
+                .padding(end = iconPadding)
+                .testTag(TestTag.IconTag.cleanOutlineButtonIconTag)
         )
-        Text(text = text)
+        Text(text = text, modifier = modifier.testTag(TestTag.TextTag.cleanOutlineButtonTextTag))
     }
 }
 

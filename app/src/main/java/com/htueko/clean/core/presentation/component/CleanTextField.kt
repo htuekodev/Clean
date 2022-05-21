@@ -12,6 +12,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,7 +49,9 @@ fun CleanTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
 ) {
-    Column {
+    Column(
+        modifier = modifier.testTag(TestTag.TextFieldTag.cleanTextFieldParentTag)
+    ) {
         // height of the text field
         val textFieldHeight = dimensionResource(id = R.dimen.text_field_height)
         // shape of the text field
@@ -64,7 +67,8 @@ fun CleanTextField(
             onValueChange = onTextChanged,
             modifier = modifier
                 .fillMaxWidth()
-                .height(textFieldHeight),
+                .height(textFieldHeight)
+                .testTag(TestTag.TextFieldTag.cleanTextFieldTag),
             visualTransformation = visualTransformation,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,

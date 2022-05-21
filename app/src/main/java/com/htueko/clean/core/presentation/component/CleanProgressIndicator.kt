@@ -6,6 +6,7 @@ import androidx.compose.material.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 
 /**
@@ -22,6 +23,8 @@ fun CleanProgressIndicator(
     strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth,
 ) {
     CircularProgressIndicator(
-        modifier, color, strokeWidth
+        modifier.testTag(TestTag.UtilTag.cleanProgressIndicatorTag),
+        color,
+        strokeWidth,
     )
 }
